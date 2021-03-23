@@ -13,23 +13,43 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var App = /** @class */ (function () {
-    function App() {
+//application
+var CppApp = /** @class */ (function () {
+    function CppApp() {
     }
-    App.prototype.insertObj = function () {
-        console.log("Inserting obj...");
+    CppApp.prototype.addNewTask = function () {
+        console.log("Adding new task to TODO list");
     };
-    return App;
+    CppApp.prototype.updateTask = function () {
+        console.log("Updating current task in TODO list");
+    };
+    CppApp.prototype.deleteTask = function () {
+        console.log("Deleting task");
+    };
+    return CppApp;
 }());
+//adapter
 var Adapter = /** @class */ (function (_super) {
     __extends(Adapter, _super);
     function Adapter() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Adapter.prototype.insert = function () {
-        this.insertObj();
+        this.addNewTask();
+    };
+    Adapter.prototype.update = function () {
+        this.updateTask();
+    };
+    Adapter.prototype["delete"] = function () {
+        this.deleteTask();
     };
     return Adapter;
-}(App));
+}(CppApp));
+//client code
 var db = new Adapter();
 db.insert();
+//имитация работы, к примеру, ойти компании. У менеджеров собственное приложение, через которое они
+//добавляют, удаляют или изменяют таски(и ничего более); программисты через свое приложение отслеживают
+//таски. Т.к. интерфейс разный, необходим адаптер, который будет переводить команды одного приложения в другой.
+/* я хотел показать, что у нас есть бд и стороннее приложение, имеющий доступ к нему. Однако приложение не понимает команды
+бд, и необходимо создать адаптер, котрый позволит манипулировать сразу 2 интерфейсами сразу*/
